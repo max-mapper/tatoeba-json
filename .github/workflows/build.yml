@@ -8,11 +8,11 @@ jobs:
     name: Build latest JSON file
     strategy:
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.14"]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
@@ -23,13 +23,13 @@ jobs:
     - name: Lint with Ruff
       run: |
         pip install ruff
-        ruff --output-format=github .
+        ruff check --output-format=github .
     - name: Download latest example sentences
       run: python download.py
     - name: Convert sentence data to JSON
       run: python parse.py
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v6
       with:
         name: jpn-eng-examples.zip
         path: dist
